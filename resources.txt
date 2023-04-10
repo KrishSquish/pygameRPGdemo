@@ -1,0 +1,24 @@
+1 2 3 4 5
+player startes at 1 and ends at 4
+needs to go to five
+needs a constant pace 
+remaining distance = rd
+rn rd is 1 (1 grid space to move)
+make a statement making player movement the same and break once it hitsthe gird number
+
+
+rd has to be minus instead of plus
+
+
+"2.	Have enemies spot you from some grid spaces away and will stop you, approach you, and initiate a battle"
+make bigger hitboxes
+
+need a way to detect ever 15 
+if frame number is x>15, 15<x>30,30<x>45, 45<x>60
+
+if opponent.defeated == False:
+# draw hitboxes in loop maybe?
+
+
+need to adjust delta Y so its minus whatever is being checked for in coordinate snapping maybe?
+becxause there is always a little edge

@@ -22,3 +22,6 @@ if opponent.defeated == False:
 
 need to adjust delta Y so its minus whatever is being checked for in coordinate snapping maybe?
 becxause there is always a little edge
+
+GOTTA FIGURE OUT how to make it stop fully
+

@@ -231,9 +231,11 @@ while running:
                         if tile not in deadEnds:
                             tileRect = pygame.Rect((tileX * tileSize)-tileSize, (tileY * tileSize), tileSize, tileSize)
                             pygame.draw.rect(screen,"blue",tileRect, 1)
-                            tileBoxes.append(pygame.draw.rect(screen,"blue",tileRect, 1))
+                            if not tileRect in tileBoxes:
+                                tileBoxes.append(pygame.draw.rect(screen,"blue",tileRect, 1))
             tileY += 1
-            #creating hitboxes
+        
+        #creating hitboxes
         player.xOffset = 7
         player.yOffset = 29
         player.hitbox = (player.x+player.xOffset,player.y+player.yOffset , tileSize,tileSize)    
@@ -252,23 +254,42 @@ while running:
         #player movement
         if not player.hitbox.collidelistall(enemyPlayerDetectHB):
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            if keys[pygame.K_LEFT] or keys[pygame.K_a] and player.negXHb.collidelistall(tileBoxes) != []:
                 player.speedX = -75 *deltaTime
                 currentWalkList = walkLeftList
-            if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            if keys[pygame.K_RIGHT] or keys[pygame.K_d] and player.posXHb.collidelistall(tileBoxes) != []:
                 player.speedX = 75 *deltaTime
                 currentWalkList = walkRightList
-            if keys[pygame.K_UP] or keys[pygame.K_w]:
+            if keys[pygame.K_UP] or keys[pygame.K_w] and player.posYHb.collidelistall(tileBoxes) != []:
                 player.speedY = -75 *deltaTime
                 currentWalkList = walkBackList
-            if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            if keys[pygame.K_DOWN] or keys[pygame.K_s] and player.negYHb.collidelistall(tileBoxes) != []:
                 player.speedY = 75 *deltaTime
                 currentWalkList = walkFrontList
+
+        print(player.posYHb.collidelistall(tileBoxes))
 
         player.img = currentWalkList[frameNum // 15]
 
         player.x += player.speedX
         player.y += player.speedY
+
+        if player.negXHb.collidelistall(tileBoxes) == []: # check for collision with left tiles
+            player.collidedLeft = True
+        else:
+            player.collidedLeft = False
+        if player.posXHb.collidelistall(tileBoxes) == []: # check for collision with right tiles
+            player.collidedRight = True
+        else:
+            player.collidedRight = False        
+        if player.negYHb.collidelistall(tileBoxes) == []: # check for collision with down tiles
+            player.collidedDown = True
+        else:
+            player.collidedLeft = False
+        if player.posYHb.collidelistall(tileBoxes) == []: # check for collision with up tiles
+            player.collidedU = True
+        else:
+            player.collidedUp = False
         
         #grid system challenge 1
         if round(player.x) % tileSize == 44:
